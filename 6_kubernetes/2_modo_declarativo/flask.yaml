@@ -1,0 +1,17 @@
+apiVersion: apps/v1 #versao da ferramenta
+kind: Deployment #tipo do arquivo
+metadata: #inclui informacoes do projeto
+  name: flask-app-deployment #nome do deployment
+spec: #especificacoes do servico
+  replicas: 4 #numero de replicadas de nodes/pods
+  selector: #selector é utilizado para nomear as specs
+    matchLabels:
+      app: flask-app #label de flask-app
+  template: #como o container vai rodar
+    metadata:
+      labels: #labels do template
+        app: flask-app
+    spec: #especificacao do template
+      containers: #definis as especificacoes de containers como nome e imagem
+        - name: flask #nome container
+          image: vitordemarqui/flash-kub-projeto:3 #imagem container

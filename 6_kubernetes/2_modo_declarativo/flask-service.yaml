@@ -1,0 +1,12 @@
+apiVersion: v1 #versao da ferramenta
+kind: Service #tipo do arquivo
+metadata: #descrever algum objeto
+  name: flask-service #nome do servico
+spec:
+  selector:
+    app: flask-app #seleciona um deployment pra expor, tem que ser o mesmo nome
+  ports:  #porta
+    - protocol: 'TCP' #tipo de protocolo
+      port: 5000
+      targetPort: 5000
+  type: LoadBalancer #como ira funcionar os pods

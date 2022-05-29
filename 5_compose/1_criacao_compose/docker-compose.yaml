@@ -1,0 +1,32 @@
+#versao docker compose
+version: '3.3'
+
+#onde ficam os containers
+services:
+  db: # nome Container de MySQL
+    platform: linux/x86_64 #define que ira funcionar no arm64
+    image: mysql:5.7 # FROM mysql:5.7 importa imagem
+    volumes: #define volume para o container
+      - db_data:/var/lib/mysql
+    restart: always #todas as alteracoes vao ser automaticamente atualizada no projeto
+    environment: #variaveis de ambiente
+      MYSQL_ROOT_PASSWORD: wordpress
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: matheus
+      MYSQL_PASSWORD: secret
+
+  wordpress:
+    depends_on: #depende quais servicos o container depende
+      - db
+    image: wordpress:latest
+    ports: #porta que o container ira expor
+      - "8000:80"
+    restart: always
+    environment: #acessos banco
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_USER: matheus
+      WORDPRESS_DB_PASSWORD: secret
+      WORDPRESS_DB_NAME: wordpress
+volumes: #obrigacao quando declara volumes da aplicacao
+  db_data: {}
+
